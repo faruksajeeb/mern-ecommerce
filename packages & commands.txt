@@ -1,0 +1,13 @@
+npm init --y
+npm install express --save
+npm i body-parser
+npm i cors
+npm i dot-env
+npm i express-mongo-sanitize
+npm i express-rate-limit
+npm i helmet
+npm i hpp
+npm i jsonwebtoken
+npm i nodemon
+npm i xss-clean
+npm i mongoose

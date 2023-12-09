@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 const cors = require("cors");
+const path = require("path");
 
 // Datatabse
 const mongoose = require("mongoose");
@@ -43,14 +44,17 @@ mongoose.connect(URI,OPTION).then((res)=>{
 })
 
 
+
+// Backend Routing
+app.use("/api", router);
+
 // Front Routing
 app.use(express.static('client/build'));
 app.get('*',function(req,res){
     req.sendFile(path.resolve(__dirname,'client','build','index.html'));
 });
 
-// Backend Routing
-app.use("/api", router);
+
 app.use("*", (req, res) => {
   res.status(404).json({ status: "fail", data: "Not Found" });
 });

@@ -1,13 +1,13 @@
 const {
-  ProductBYRemark,
-  ProductBYCategory,
-  DetailsBYID,
-  ProductBYBrand,
-  ProductBYCategoryLimit10,
-  ProductBYSlider,
-  ProductBYKeyword,
+  ProductByRemark,
+  ProductByCategory,
+  DetailsByID,
+  ProductByBrand,
+  ProductByCategoryLimit10,
+  ProductBySlider,
+  ProductByKeyword,
   AllBrands,
-  AllSliders
+  AllSliders,
 } = require("../services/ProductService");
 
 exports.ProductBrandList = async (req, res) => {
@@ -16,17 +16,27 @@ exports.ProductBrandList = async (req, res) => {
 };
 
 exports.ProductListByCategory = async (req, res) => {
-  let result=await  ProductBYCategory(req)
-  return res.status(200).json(result)
+  let result = await ProductByCategory(req);
+  return res.status(200).json(result);
 };
 
 exports.ProductListBySmilier = async (req, res) => {};
-exports.ProductListByBrand = async (req, res) => {};
-exports.ProductListByRemark = async (req, res) => {};
-exports.ProductSliderList = async (req, res) => {
-  let result=await  AllSliders(req)
-  return res.status(200).json(result)
+
+exports.ProductListByBrand = async (req, res) => {
+  let result = await ProductByBrand(req);
+  return res.status(200).json(result);
 };
-exports.ProductListByKeyword = async (req, res) => {};
+exports.ProductListByRemark = async (req, res) => {
+  let result = await ProductByRemark(req);
+  return res.status(200).json(result);
+};
+exports.ProductSliderList = async (req, res) => {
+  let result = await AllSliders(req);
+  return res.status(200).json(result);
+};
+exports.ProductListByKeyword = async (req, res) => {
+  let result = await this.ProductListByKeyword(req);
+  return res.status(200).json(result);
+};
 exports.ProductDetails = async (req, res) => {};
 exports.ProductReviewList = async (req, res) => {};

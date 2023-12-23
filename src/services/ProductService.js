@@ -6,6 +6,7 @@ const ProductModel = require("../models/ProductModel");
 const ProductSliderModel = require("../models/ProductSliderModel");
 const ProductDetailModel = require("../models/ProductDetailModel");
 const FeaturesModel = require("../models/FeaturesModel");
+const ReviewModel = require("../models/ReviewModel");
 
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -267,39 +268,90 @@ const ProductListByKeyword = async (req) => {
     return { status: "fail", data: e.toString() };
   }
 };
-const DetailsByID = async () => {
+const DetailsByID = async (req) => {
   try {
-      let ProductID=new ObjectId(req.params.id)
+    let ProductID = new ObjectId(req.params.productID);
+    //return ProductID;
+    let matchStage = { $match: { _id: ProductID } };
 
-        let JoinStage1={$lookup: {from: "categories", localField: "categoryID", foreignField: "_id", as: "category"}};
-        let JoinStage2={$lookup: {from: "brands", localField: "brandID", foreignField: "_id", as: "brand"}};
-        let JoinStage3={$lookup: {from: "productdetails", localField: "_id", foreignField: "productID", as: "details"}};
+    let JoinWithCategoryStage = {
+      $lookup: {
+        from: "categories",
+        localField: "categoryID",
+        foreignField: "_id",
+        as: "category",
+      },
+    };
+    let JoinWithBrandStage = {
+      $lookup: {
+        from: "brands",
+        localField: "brandID",
+        foreignField: "_id",
+        as: "brand",
+      },
+    };
+    let JoinWithDetailStage = {
+      $lookup: {
+        from: "productdetails",
+        localField: "productID",
+        foreignField: "_id",
+        as: "details",
+      },
+    };
 
+    let projectionStage = {
+      $project: {
+        "category._id": 0,
+        "brand._id": 0,
+        categoryID: 0,
+        brandID: 0,
+      },
+    };
+    // let projectionStage= {$project: {'category._id': 0, 'brand._id': 0,'details._id':0,'details.productID':0}}
+    let unwindCategoryStage = { $unwind: "$category" };
+    let unwindBrandStage = { $unwind: "$brand" };
+    let unwindDetailsStage = { $unwind: "$details" };
 
-        let projectionStage= {$project: {'category._id': 0, 'brand._id': 0,'details._id':0,'details.productID':0}}
-        let unwindCategoryStage={$unwind: "$category"}
-        let unwindBrandStage={$unwind: "$brand"}
-        let unwindDetailsStage={$unwind: "$details"}
-
-        let matchStage=  {$match: {_id:ProductID}};
-
-        let data=await ProductModel.aggregate([
-            matchStage,
-            JoinStage1,
-            JoinStage2,
-            JoinStage3,
-            unwindCategoryStage,
-            unwindBrandStage,
-            unwindDetailsStage,
-            projectionStage,
-        ])
-        return {status:"success", data:data}
+    let data = await ProductModel.aggregate([
+      matchStage,
+      JoinWithCategoryStage,
+      JoinWithBrandStage,
+      JoinWithDetailStage,
+      unwindCategoryStage,
+      unwindBrandStage,
+      unwindDetailsStage,
+      projectionStage,
+    ]);
+    return { status: "success", data: data };
   } catch (e) {
     return { status: "fail", data: e.toString() };
   }
 };
-const XXXX = async () => {
+const ProductReviewList = async (req) => {
   try {
+    let ProductID = new ObjectId(req.params.productID);
+    //let ProductID = req.params.productID;
+    //return ProductID;
+    let matchStage = { $match: { productID: ProductID } };
+    let joinWithProfileStage = {
+      $lookup: {
+        from: "profiles",
+        localField: "userID",
+        foreignField: "userID",
+        as: "profile",
+      },
+    };
+
+    let unwindProfileStage = { $unwind: "$profile" };
+    let projectionStage = {
+      $project:{
+        'des':1,
+        'rating':1,
+        'profile.cus_name':1
+      }
+    }
+    let data = await ReviewModel.aggregate([matchStage, joinWithProfileStage, unwindProfileStage,projectionStage]);
+    return { status: "success", data: data };
   } catch (e) {
     return { status: "fail", data: e.toString() };
   }
@@ -317,4 +369,5 @@ module.exports = {
   ProductByCategoryLimit10,
   ProductBySlider,
   ProductListByKeyword,
+  ProductReviewList,
 };

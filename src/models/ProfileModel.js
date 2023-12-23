@@ -1,8 +1,6 @@
 const mongoose =require('mongoose');
 const DataSchema=mongoose.Schema({
-
         userID:{type:mongoose.Schema.Types.ObjectId,required:true},
-
         cus_name:{type:String,trim:true,required:true},
         cus_add:{type:String,trim:true,required:true},
         cus_city:{type:String,trim:true,required:true},
@@ -11,7 +9,6 @@ const DataSchema=mongoose.Schema({
         cus_country:{type:String,trim:true,required:true,default:'Bangladesh'},
         cus_phone:{type:String,trim:true,required:true},
         cus_fax:{type:String,trim:true,required:true,default:"0000"},
-
         ship_name:{type:String,trim:true,required:true},
         ship_add:{type:String,trim:true,required:true},
         ship_city:{type:String,trim:true,required:true},

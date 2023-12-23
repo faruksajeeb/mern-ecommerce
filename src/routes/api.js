@@ -17,8 +17,8 @@ router.get('/ProductListByBrand/:brandID',ProductController.ProductListByBrand)
 router.get('/ProductListByRemark/:remark',ProductController.ProductListByRemark)
 router.get('/ProductSliderList',ProductController.ProductSliderList)
 router.get('/ProductListByKeyword/:keyword',ProductController.ProductListByKeyword)
-router.get('/ProductListDetails/:id',ProductController.ProductDetails)
-router.get('/ProductReviewList/:id',ProductController.ProductReviewList)
+router.get('/ProductDetails/:productID',ProductController.ProductDetails)
+router.get('/ProductReviewList/:productID',ProductController.ProductReviewList)
 
 
 module.exports = router;

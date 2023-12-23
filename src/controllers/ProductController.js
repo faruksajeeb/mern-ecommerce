@@ -8,6 +8,7 @@ const {
   ProductListByKeyword,
   AllBrands,
   AllSliders,
+  ProductReviewList
 } = require("../services/ProductService");
 
 exports.ProductBrandList = async (req, res) => {
@@ -49,4 +50,7 @@ exports.ProductListByKeyword=async (req,res)=>{
   let result=await  ProductListByKeyword(req)
   return res.status(200).json(result)
 };
-exports.ProductReviewList = async (req, res) => {};
+exports.ProductReviewList = async (req, res) => {
+  let result = await ProductReviewList(req);
+  return res.status(200).json(result);
+};

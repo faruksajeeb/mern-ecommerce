@@ -49,9 +49,9 @@ mongoose.connect(URI,OPTION).then((res)=>{
 app.use("/api", router);
 
 // Front Routing
-app.use(express.static('client/build'));
+app.use(express.static('client/dist'));
 app.get('*',function(req,res){
-    req.sendFile(path.resolve(__dirname,'client','build','index.html'));
+    req.sendFile(path.resolve(__dirname,'client','dist','index.html'));
 });
 
 

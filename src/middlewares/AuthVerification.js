@@ -1,9 +1,13 @@
 const { DecodeToken } = require("../helpers/TokenHelper");
 
 module.exports = (req, res, next) => {
-    let token = req.headers['token'] // Token From Other's
+
+    let token = req.headers['token'] || req.cookies['token'];
+
     if (!token) {
-        token = req.cookies['token']; // Token From Web
+        // Handle the case when the token is not present
+        console.error('Token is not present in headers or cookies.');
+        return res.status(401).json({ error: 'Unauthorized' });
     }
 
     let decoded = DecodeToken(token);

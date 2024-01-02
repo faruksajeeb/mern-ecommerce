@@ -1,0 +1,29 @@
+npx create-react-app app-name
+npm i bootstrap
+npm i react-bootstrap
+npm i react-html-parser
+npm i html-react-parser
+npm i lottie-react
+
+npm i react-router
+npm i react-router-dom
+npm i axios
+npm i react-hot-toast
+npm i cogo-toast
+npm i react-toastify
+npm i sweetalert2
+npm i react-sweetalert2
+npm i react-bootstrap-sweetalert
+npm i react-image-gallery
+npm install moment --save
+npm i react-icons
+npm i cleave.js
+npm i recharts
+npm i localforage
+npm i react-code-input
+npm i read-excel-file
+npm i export-from-json
+
+npm i html-to-image
+npm i react-tooltip
+npm i react-window

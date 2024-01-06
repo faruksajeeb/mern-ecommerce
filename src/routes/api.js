@@ -6,6 +6,7 @@ const ProductController = require("../controllers/ProductController");
 const BrandController = require("../controllers/BrandController");
 const CategoryController = require("../controllers/CategoryController");
 const WishListController = require("../controllers/WishListController");
+const CartController = require("../controllers/CartController"); 
 const AuthVerification = require("../middlewares/AuthVerification");
 
 //Api Routing end point
@@ -34,11 +35,27 @@ router.get('/ProductListByKeyword/:keyword',ProductController.ProductListByKeywo
 router.get('/ProductDetails/:productID',ProductController.ProductDetails)
 router.get('/ProductReviewList/:productID',ProductController.ProductReviewList)
 
+// Cart
+router.post('/SaveCartList',AuthVerification,CartController.SaveCartList)
+router.post('/UpdateCartList/:cartID',AuthVerification,CartController.UpdateCartList)
+router.post('/RemoveCartList',AuthVerification,CartController.RemoveCartList)
+router.get('/CartList',AuthVerification,CartController.CartList)
+
+//Wish List
 router.get('/WishList',AuthVerification,WishListController.WishList)
-router.post('/CreateWishList',AuthVerification,WishListController.AddWishItem)
+router.post('/SaveWishList',AuthVerification,WishListController.AddWishItem)
 router.post('/RemoveWishList',AuthVerification,WishListController.RemoveWishItem)
 
+// Invoice
+router.get('/CreateInvoice',AuthVerification,InvoiceController.CreateInvoice)
+router.get('/InvoiceList',AuthVerification,InvoiceController.InvoiceList)
+router.get('/InvoiceProductList/:invoice_id',AuthVerification,InvoiceController.InvoiceProductList)
 
+// Payment
+router.post('/PaymentSuccess/:trxID',InvoiceController.PaymentSuccess)
+router.post('/PaymentCancel/:trxID',InvoiceController.PaymentCancel)
+router.post('/PaymentFail/:trxID',InvoiceController.PaymentFail)
+router.post('/PaymentIPN/:trxID',InvoiceController.PaymentIPN)
 
 
 
